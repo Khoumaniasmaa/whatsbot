@@ -3,7 +3,7 @@
             
             <div class="page-breadcrumb">
                 <div class="row align-items-center">
-                    <div class="col-md-6 col-8 align-self-center">
+                    <div class="col-md-12 align-self-center">
                         <h3 class="page-title mb-0 p-0">Accueil</h3>
                     </div>
                 </div>
@@ -12,15 +12,14 @@
             <div class="container-fluid">
                 
                 <div class="row">
-                    
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="d-flex flex-wrap align-items-center">
                                             <div>
-                                                <h3 class="card-title"> Les Statistiques des questions</h3>
+                                                <h3 class="card-title">Statistiques des questions</h3>
                                                 <h6 class="card-subtitle">Questions publiées ce moi</h6>
                                             </div>
                                             <div class="ms-lg-auto mx-sm-auto mx-lg-0">
@@ -42,7 +41,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
                                 <h3 class="card-title">Questions par tag </h3>
@@ -60,13 +62,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                
-                
-                <div class="row">
-                    
-                    <div class="col-lg-4 col-xlg-3">
+                    <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body bg-info">
                                 <h4 class="text-white card-title">Tags populaire</h4>
@@ -96,7 +92,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8 col-xlg-9">
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-12">
                         <div class="card">
                             
                             <ul class="nav nav-tabs profile-tab" role="tablist">
@@ -107,8 +106,8 @@
                             
                             <div class="tab-content">
                                 <div class="tab-pane active" id="home" role="tabpanel">
-                                    <div class="card-body">
-                                        <table class="table table-striped">
+                                    <div class="card-body" style="overflow-x:scroll">
+                                        <table class="table table-striped table-fullwidth" style='width: 100% !important'>
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
@@ -123,7 +122,7 @@
                                             <?php
                                                 $questions = $conn->query('SELECT questions.id id, content, answer, related_to, username FROM questions INNER JOIN users ON 
                                                 users.id = questions.user_id ORDER BY questions.id DESC LIMIT 5');
-                                                if($questions->num_rows <= 0) echo "<tr><td colspan=5 align=center>Aucune question ajouté</td></tr>";
+                                                if($questions->num_rows <= 0) echo "<tr><td colspan=5 align=center>Aucun question ajouté</td></tr>";
                                                 while($question = $questions->fetch_object()):
                                                     $tags = $conn->query("SELECT * FROM questions_tags INNER JOIN tags ON questions_tags.tag_id=tags.id
                                                     WHERE questions_tags.question_id='{$question->id}'")->fetch_all(MYSQLI_ASSOC);
@@ -138,7 +137,7 @@
                                                 <tr>
                                                     <td><?= $question->id ?></td>
                                                     <td><?= $question->content ?></td>
-                                                    <td><?= $question->answer ?></td>
+                                                    <td><?= substr($question->answer, 0, 40) ?></td>
                                                     <td><?= $related ?></td>
                                                     <td><?= $question->username ?></td>
                                                     <td><?= $tags ?></td>
